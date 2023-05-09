@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  RegisterViewController.swift
 //  fireBaseChat
 //
 //  Created by Anton on 09.05.2023.
@@ -7,12 +7,15 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class RegisterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
+        title = "Sign up"
+        view.backgroundColor = .link
+        
     }
     
 
