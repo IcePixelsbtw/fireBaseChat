@@ -1,5 +1,5 @@
 //
-//  RegisterViewController.swift
+//  LoginViewController.swift
 //  fireBaseChat
 //
 //  Created by Anton on 09.05.2023.
@@ -8,25 +8,261 @@
 import UIKit
 
 class RegisterViewController: UIViewController {
-
+    
+    //MARK: Initialize views
+    
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        
+        scrollView.clipsToBounds = true
+        
+        return scrollView
+    }()
+    
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.image = UIImage(systemName: "person")
+        imageView.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
+    }()
+    
+    private let emailField: UITextField = {
+        let field = UITextField()
+        
+        field.autocapitalizationType = .none
+        field.autocorrectionType = .no
+        field.returnKeyType = .continue
+        field.layer.cornerRadius = 12
+        field.layer.borderWidth = 1
+        field.layer.borderColor = UIColor.lightGray.cgColor
+        field.layer.borderColor = CGColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+        field.placeholder = "Email Adress..."
+        field.backgroundColor = .white
+        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
+        field.leftViewMode = .always
+        
+        return field
+    }()
+    
+    private let firstNameField: UITextField = {
+        let field = UITextField()
+        
+        field.autocapitalizationType = .none
+        field.autocorrectionType = .no
+        field.returnKeyType = .continue
+        field.layer.cornerRadius = 12
+        field.layer.borderWidth = 1
+        field.layer.borderColor = UIColor.lightGray.cgColor
+        field.layer.borderColor = CGColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+        field.placeholder = "Enter your first name"
+        field.backgroundColor = .white
+        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
+        field.leftViewMode = .always
+        
+        return field
+    }()
+    
+    private let lastNameField: UITextField = {
+        let field = UITextField()
+        
+        field.autocapitalizationType = .none
+        field.autocorrectionType = .no
+        field.returnKeyType = .continue
+        field.layer.cornerRadius = 12
+        field.layer.borderWidth = 1
+        field.layer.borderColor = UIColor.lightGray.cgColor
+        field.layer.borderColor = CGColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+        field.placeholder = "Enter your last name"
+        field.backgroundColor = .white
+        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
+        field.leftViewMode = .always
+        
+        return field
+    }()
+    
+    
+    
+    private let passwordField: UITextField = {
+        let field = UITextField()
+        
+        field.autocapitalizationType = .none
+        field.autocorrectionType = .no
+        field.returnKeyType = .done
+        field.layer.cornerRadius = 12
+        field.layer.borderWidth = 1
+        field.layer.borderColor = UIColor.lightGray.cgColor
+        field.placeholder = "Enter your password"
+        field.backgroundColor = .white
+        field.layer.borderColor = CGColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+        
+        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
+        field.leftViewMode = .always
+        field.isSecureTextEntry = true
+        
+        return field
+    }()
+    
+    private let signUpButton: UIButton = {
+        let button = UIButton()
+        
+        button.setTitle("Sign up", for: .normal)
+        button.backgroundColor = .white
+        button.setTitleColor(.link, for: .normal)
+        button.layer.cornerRadius = 12
+        button.layer.borderColor = CGColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+        button.layer.masksToBounds = true
+        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        
+        return button
+        
+        
+    }()
+    
+    //MARK: ViewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        let colors = Colors()
+        
+        let backgroundLayer = colors.gl
+        backgroundLayer?.frame = view.frame
+        view.layer.insertSublayer(backgroundLayer!, at: 0)
         title = "Sign up"
-        view.backgroundColor = .link
+        
+        
+        signUpButton.addTarget(self,
+                               action: #selector(didTapSignUp),
+                               for: .touchUpInside)
+        
+        firstNameField.delegate = self
+        lastNameField.delegate = self
+        
+        emailField.delegate = self
+        passwordField.delegate = self
+        
+        
+        //MARK: Add subviews
+        
+        imageView.isUserInteractionEnabled = true
+        scrollView.isUserInteractionEnabled = true
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(firstNameField)
+        scrollView.addSubview(lastNameField)
+        scrollView.addSubview(imageView)
+        scrollView.addSubview(emailField)
+        scrollView.addSubview(passwordField)
+        scrollView.addSubview(signUpButton)
+        
+        let gesture = UIGestureRecognizer(target: self,
+                                          action: #selector(didTapChangeProfilePicture))
+        
+        
+        imageView.addGestureRecognizer(gesture)
+         
+    }
+    
+    //MARK: Layout
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        scrollView.frame = view.bounds
+        let size = scrollView.width / 3
+        imageView.frame = CGRect(x: (scrollView.width - size) / 2,
+                                 y: 30,
+                                 width: size,
+                                 height: size)
+        firstNameField.frame = CGRect(x: 30,
+                                      y: imageView.bottom + 10,
+                                      width: scrollView.width - 60,
+                                      height: 52)
+        lastNameField.frame = CGRect(x: 30,
+                                     y: firstNameField.bottom + 10,
+                                     width: scrollView.width - 60,
+                                     height: 52)
+        emailField.frame = CGRect(x: 30,
+                                  y: lastNameField.bottom + 10,
+                                  width: scrollView.width - 60,
+                                  height: 52)
+        passwordField.frame = CGRect(x: 30,
+                                     y: emailField.bottom + 10,
+                                     width: scrollView.width - 60,
+                                     height: 52)
+        signUpButton.frame = CGRect(x: 30,
+                                    y: passwordField.bottom + 10,
+                                    width: scrollView.width - 60,
+                                    height: 52)
         
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //MARK: Functions
+    @objc private func didTapSignUp() {
+        
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        
+        guard let email = emailField.text,
+              let password = passwordField.text,
+              let firstName = firstNameField.text,
+              let lastName = lastNameField.text,
+              !firstName.isEmpty,
+                !lastName.isEmpty,
+                !email.isEmpty,
+              !password.isEmpty,
+              password.count >= 6 else {
+            
+            alertUserLogInError()
+            return
+        }
+        
+        //TODO: Firebase log in
+        
     }
-    */
+    
+    func alertUserLogInError() {
+        let alert = UIAlertController(title: "Whoops...",
+                                      message: "Something went wrong, please make sure that both email and password are filled in. Also make sure that password is more than 6 symbols long",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Got it!",
+                                      style: .cancel,
+                                      handler: nil))
+        
+        present(alert, animated: true)
+    }
+    
+    @objc private func didTapChangeProfilePicture() {
+        print("Change picture called...")
+    }
+    
+    
+    
+}
 
+
+
+
+
+
+//MARK: Extensions
+extension RegisterViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == firstNameField {
+            lastNameField.becomeFirstResponder()
+        } else if textField == lastNameField{
+            emailField.becomeFirstResponder()
+        }  else if textField == emailField{
+            passwordField.becomeFirstResponder()
+        } else if textField == passwordField {
+            didTapSignUp()
+        }
+        
+        return true
+    }
 }

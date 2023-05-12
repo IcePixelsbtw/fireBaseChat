@@ -20,6 +20,7 @@
 		3A05D7242A09C91200A113D7 /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A05D7232A09C91200A113D7 /* NewConversationViewController.swift */; };
 		3A05D7272A09C92500A113D7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A05D7262A09C92500A113D7 /* ProfileViewController.swift */; };
 		3ABE64AD2A0D796900BB04CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABE64AC2A0D796900BB04CA /* Extensions.swift */; };
+		3ABE64AF2A0EA49900BB04CA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABE64AE2A0EA49900BB04CA /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		3A05D7232A09C91200A113D7 /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		3A05D7262A09C92500A113D7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		3ABE64AC2A0D796900BB04CA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		3ABE64AE2A0EA49900BB04CA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				3A05D7022A098DB800A113D7 /* AppDelegate.swift */,
 				3A05D7042A098DB800A113D7 /* SceneDelegate.swift */,
 				3ABE64AC2A0D796900BB04CA /* Extensions.swift */,
+				3ABE64AE2A0EA49900BB04CA /* Colors.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A05D71C2A09C8CA00A113D7 /* LoginViewController.swift in Sources */,
+				3ABE64AF2A0EA49900BB04CA /* Colors.swift in Sources */,
 				3A05D71E2A09C8E000A113D7 /* RegisterViewController.swift in Sources */,
 				3A05D7242A09C91200A113D7 /* NewConversationViewController.swift in Sources */,
 				3A05D7072A098DB800A113D7 /* ConversationsViewController.swift in Sources */,
