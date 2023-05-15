@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class Colors {
+    
     var gl:CAGradientLayer!
     
     init() {

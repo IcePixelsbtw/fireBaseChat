@@ -25,6 +25,9 @@ class RegisterViewController: UIViewController {
         imageView.image = UIImage(systemName: "person")
         imageView.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
         imageView.contentMode = .scaleAspectFit
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderWidth = 2
+        imageView.layer.borderColor = UIColor.lightGray.cgColor
         
         return imageView
     }()
@@ -158,12 +161,12 @@ class RegisterViewController: UIViewController {
         scrollView.addSubview(passwordField)
         scrollView.addSubview(signUpButton)
         
-        let gesture = UIGestureRecognizer(target: self,
-                                          action: #selector(didTapChangeProfilePicture))
+        let gesture = UITapGestureRecognizer(target: self,
+                                             action: #selector(didTapChangeProfilePicture))
         
         
         imageView.addGestureRecognizer(gesture)
-         
+        
     }
     
     //MARK: Layout
@@ -171,11 +174,16 @@ class RegisterViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         scrollView.frame = view.bounds
+        
         let size = scrollView.width / 3
+        
         imageView.frame = CGRect(x: (scrollView.width - size) / 2,
                                  y: 30,
                                  width: size,
                                  height: size)
+        
+        imageView.layer.cornerRadius = imageView.width / 2.0
+
         firstNameField.frame = CGRect(x: 30,
                                       y: imageView.bottom + 10,
                                       width: scrollView.width - 60,
@@ -200,7 +208,15 @@ class RegisterViewController: UIViewController {
     }
     
     //MARK: Functions
+    @objc private func didTapChangeProfilePicture() {
+        
+        presentPhotoActionSheet()
+        print("Change picture called...")
+    }
+    
     @objc private func didTapSignUp() {
+        
+        print("Sign up called...")
         
         emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
@@ -210,8 +226,8 @@ class RegisterViewController: UIViewController {
               let firstName = firstNameField.text,
               let lastName = lastNameField.text,
               !firstName.isEmpty,
-                !lastName.isEmpty,
-                !email.isEmpty,
+              !lastName.isEmpty,
+              !email.isEmpty,
               !password.isEmpty,
               password.count >= 6 else {
             
@@ -235,9 +251,6 @@ class RegisterViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    @objc private func didTapChangeProfilePicture() {
-        print("Change picture called...")
-    }
     
     
     
@@ -265,4 +278,69 @@ extension RegisterViewController: UITextFieldDelegate {
         
         return true
     }
+}
+
+
+extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func presentPhotoActionSheet() {
+        
+        let actionSheet = UIAlertController(title: "Profile picture",
+                                            message: "How would you like to take a picture?",
+                                            preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel",
+                                            style: .cancel))
+        actionSheet.addAction(UIAlertAction(title: "Take photo",
+                                            style: .default,
+                                            handler: { [weak self] _ in
+            self?.presentCamera()
+            
+            
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Choose photo ",
+                                            style: .default,
+                                            handler: { [weak self] _ in
+            
+            self?.presentPhotoPicker()
+            
+        }))
+        
+        present(actionSheet, animated: true)
+    }
+    
+    func presentCamera() {
+        print("Present Camera called...")
+        
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    
+    func presentPhotoPicker() {
+        print("Present Photo Picker called...")
+        
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {return}
+
+        self.imageView.image = selectedImage
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
 }
