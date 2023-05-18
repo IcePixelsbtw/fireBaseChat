@@ -10,7 +10,7 @@ import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
-    //MARK: Initialize views
+    //MARK: - Initialize views
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -83,7 +83,7 @@ class LoginViewController: UIViewController {
         
     }()
     
-    //MARK: ViewDidLoad
+    //MARK: - ViewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,7 +117,7 @@ class LoginViewController: UIViewController {
         scrollView.addSubview(logInButton)
     }
     
-    //MARK: Layout
+    //MARK: - Layout
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -142,7 +142,9 @@ class LoginViewController: UIViewController {
         
     }
     
+    
     //MARK: Functions
+    //MARK: - Log in button function
     @objc private func didTapLogIn() {
         
         emailField.resignFirstResponder()
@@ -154,19 +156,25 @@ class LoginViewController: UIViewController {
             return
         }
         
-        //TODO: Firebase log in
+    //MARK:  Firebase log in
         FirebaseAuth.Auth.auth().signIn(withEmail: email,
                                         password: password,
-                                        completion: {authResult, error in
+                                        completion: { [weak self] authResult, error in
+            guard let strongSelf = self else { return }
             guard let result = authResult, error == nil else {
                 print("Error while signing in...")
                 return
             }
             let user = result.user
             print("Logged in User: \(user)")
+            strongSelf.navigationController?.dismiss(animated: true,
+                                                     completion: nil)
+            
         })
     }
     
+    
+//MARK: - Alert error during log in
     func alertUserLogInError() {
         let alert = UIAlertController(title: "Whoops...",
                                       message: "Something went wrong, please make sure that both email and password are filled in. Also make sure that password is more than 6 symbols long",
@@ -179,6 +187,7 @@ class LoginViewController: UIViewController {
         present(alert, animated: true)
     }
     
+        //MARK: - Register button function
     @objc private func didTapRegister() {
         let vc = RegisterViewController()
         vc.title = "Create account"
@@ -187,7 +196,7 @@ class LoginViewController: UIViewController {
     
 }
 
-//MARK: Extensions
+//MARK: -  Extensions
 extension LoginViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

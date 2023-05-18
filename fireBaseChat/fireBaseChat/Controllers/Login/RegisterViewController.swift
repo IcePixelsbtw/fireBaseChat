@@ -10,7 +10,7 @@ import FirebaseAuth
 
 class RegisterViewController: UIViewController {
     
-    //MARK: Initialize views
+    //MARK: - Initialize views
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -23,12 +23,11 @@ class RegisterViewController: UIViewController {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         
-        imageView.image = UIImage(systemName: "person")
+        imageView.image = UIImage(systemName: "person.circle")
         imageView.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.lightGray.cgColor
         
         return imageView
     }()
@@ -149,7 +148,7 @@ class RegisterViewController: UIViewController {
         passwordField.delegate = self
         
         
-        //MARK: Add subviews
+        //MARK: - Add subviews
         
         imageView.isUserInteractionEnabled = true
         scrollView.isUserInteractionEnabled = true
@@ -170,7 +169,7 @@ class RegisterViewController: UIViewController {
         
     }
     
-    //MARK: Layout
+    //MARK: - Layout
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -184,7 +183,7 @@ class RegisterViewController: UIViewController {
                                  height: size)
         
         imageView.layer.cornerRadius = imageView.width / 2.0
-
+        
         firstNameField.frame = CGRect(x: 30,
                                       y: imageView.bottom + 10,
                                       width: scrollView.width - 60,
@@ -208,7 +207,8 @@ class RegisterViewController: UIViewController {
         
     }
     
-    //MARK: Functions
+    //MARK: - Functions
+    //MARK: Log in button function
     @objc private func didTapChangeProfilePicture() {
         
         presentPhotoActionSheet()
@@ -235,24 +235,43 @@ class RegisterViewController: UIViewController {
             return
         }
         
+        //MARK: Firebase register
         
-        FirebaseAuth.Auth.auth().createUser(withEmail: email,
-                                            password: password,
-                                            completion: { authResult, error in
-            guard let result = authResult, error == nil else {
-                print("Error creating user...")
+        DatabaseManager.shared.userExists(with: email, completion: { [weak self] exists in
+            guard let strongSelf = self else {
                 return
             }
-            let user = result.user
-            print("Created User: \(user)")
+            
+            guard !exists else {
+                strongSelf.alertUserLogInError(message: "Looks like a user with that email already exists.")
+                return
+            }
+            FirebaseAuth.Auth.auth().createUser(withEmail: email,
+                                                password: password,
+                                                completion: { authResult, error in
+                guard authResult != nil, error == nil else {
+                    print("Error creating user...")
+                    return
+                }
+                
+                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName,
+                                                                    lastName: lastName,
+                                                                    emailAddress: email))
+                
+                
+                strongSelf.navigationController?.dismiss(animated: true,
+                                                         completion: nil)
+            })
+            
         })
-        //TODO: Firebase log in
+        
         
     }
     
-    func alertUserLogInError() {
+    //MARK: - Alert error during registration
+    func alertUserLogInError(message: String = "Please enter all information to proceed.") {
         let alert = UIAlertController(title: "Whoops...",
-                                      message: "Something went wrong, please make sure that both email and password are filled in. Also make sure that password is more than 6 symbols long",
+                                      message: message,
                                       preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Got it!",
@@ -261,18 +280,10 @@ class RegisterViewController: UIViewController {
         
         present(alert, animated: true)
     }
-    
-    
-    
-    
 }
 
 
-
-
-
-
-//MARK: Extensions
+//MARK: - Extensions
 extension RegisterViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -346,7 +357,7 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
         picker.dismiss(animated: true, completion: nil)
         
         guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {return}
-
+        
         self.imageView.image = selectedImage
     }
     
