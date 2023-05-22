@@ -10,6 +10,8 @@ import UIKit
 
 class Colors {
     
+    static let shared = Colors()
+    
     var gl:CAGradientLayer!
     
     init() {

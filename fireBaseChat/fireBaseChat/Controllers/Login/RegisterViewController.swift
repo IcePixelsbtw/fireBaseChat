@@ -128,10 +128,8 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let colors = Colors()
-        
-        let backgroundLayer = colors.gl
+                
+        let backgroundLayer = Colors.shared.gl
         backgroundLayer?.frame = view.frame
         view.layer.insertSublayer(backgroundLayer!, at: 0)
         title = "Sign up"

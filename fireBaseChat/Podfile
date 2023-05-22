@@ -4,10 +4,15 @@
 target 'fireBaseChat' do
   use_frameworks!
 
-  # Pods for fireBaseChat
+# FireBase
 
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
  
+# Facebook
+
+pod 'FBSDKLoginKit'
+
+
 end

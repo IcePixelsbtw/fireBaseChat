@@ -21,9 +21,30 @@
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 					<key>UISceneStoryboardFile</key>
 					<string>Main</string>
+                    
 				</dict>
 			</array>
 		</dict>
 	</dict>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>fb6143253972461048</string>
+      </array>
+      </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>6143253972461048</string>
+    <key>FacebookClientToken</key>
+    <string>ea254da838e921448b37ec3bebe974e3</string>
+    <key>FacebookDisplayName</key>
+    <string>Live Message</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-share-api</string>
+    </array>
 </dict>
 </plist>

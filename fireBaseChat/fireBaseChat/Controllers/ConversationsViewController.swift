@@ -12,8 +12,9 @@ class ConversationsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .gray
-        
+       
+    
+    
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -30,7 +31,7 @@ class ConversationsViewController: UIViewController {
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: false)
         } else {
-            print(FirebaseAuth.Auth.auth().currentUser?.email)
+            print(FirebaseAuth.Auth.auth().currentUser?.email ?? "Error...")
         }
         
     }
