@@ -447,6 +447,8 @@
 				DEVELOPMENT_TEAM = WKZ8GH6SV9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = fireBaseChat/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to your camera to take a picture";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to your Photo Library to choose a picture for your profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -479,6 +481,8 @@
 				DEVELOPMENT_TEAM = WKZ8GH6SV9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = fireBaseChat/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to your camera to take a picture";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to your Photo Library to choose a picture for your profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

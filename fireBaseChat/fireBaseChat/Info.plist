@@ -2,10 +2,34 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Please allow access to your camera to take a picture</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Please allow access to your Photo Library to choose a picture for your profile</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb6143253972461048</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.537758996930-5t3481hmm85qqbh93refept2lcqihl46</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>6143253972461048</string>
+	<key>FacebookClientToken</key>
+	<string>ea254da838e921448b37ec3bebe974e3</string>
+	<key>FacebookDisplayName</key>
+	<string>Live Message</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -21,30 +45,9 @@
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 					<key>UISceneStoryboardFile</key>
 					<string>Main</string>
-                    
 				</dict>
 			</array>
 		</dict>
 	</dict>
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb6143253972461048</string>
-      </array>
-      </dict>
-    </array>
-    <key>FacebookAppID</key>
-    <string>6143253972461048</string>
-    <key>FacebookClientToken</key>
-    <string>ea254da838e921448b37ec3bebe974e3</string>
-    <key>FacebookDisplayName</key>
-    <string>Live Message</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-      <string>fbapi</string>
-      <string>fb-messenger-share-api</string>
-    </array>
 </dict>
 </plist>
